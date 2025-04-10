@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tariff Tycoon: The Art of the Panic</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Pixel art font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Game Title Screen -->
+        <div id="title-screen" class="screen">
+            <h1 class="game-title">Tariff Tycoon</h1>
+            <h2 class="game-subtitle">The Art of the Panic</h2>
+            <p class="tagline">Pump stocks, slap tariffs, and crash the economy — all in a day's work!</p>
+            <button id="start-game" class="pixel-button">Start Game</button>
+            <button id="how-to-play" class="pixel-button">How To Play</button>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="game-screen" class="screen hidden">
+            <!-- Top Bar with Stats -->
+            <div id="stats-bar">
+                <div class="stat">
+                    <span class="stat-label">Year:</span>
+                    <span id="year-counter">1</span>/4
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Wealth:</span>
+                    $<span id="wealth-counter">1000</span>M
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Day:</span>
+                    <span id="day-counter">1</span>
+                </div>
+            </div>
+
+            <!-- Main Game Area -->
+            <div id="game-area">
+                <!-- Left Column - Character & Tweet Button -->
+                <div id="character-column">
+                    <div id="character-container">
+                        <!-- Character will be displayed here -->
+                        <div id="character-sprite"></div>
+                    </div>
+                    <button id="tweet-button" class="pixel-button">TWEET!</button>
+                </div>
+
+                <!-- Middle Column - Twitter Feed -->
+                <div id="twitter-column">
+                    <div id="twitter-header">
+                        <h3>Presidential Tweets</h3>
+                    </div>
+                    <div id="twitter-feed">
+                        <!-- Tweets will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Right Column - Market & Scandal Meters -->
+                <div id="meters-column">
+                    <div class="meter-container">
+                        <h3>Market Health</h3>
+                        <div id="market-meter" class="meter">
+                            <div id="market-meter-fill" class="meter-fill"></div>
+                        </div>
+                    </div>
+                    <div class="meter-container">
+                        <h3>Scandal Level</h3>
+                        <div id="scandal-meter" class="meter">
+                            <div id="scandal-meter-fill" class="meter-fill"></div>
+                        </div>
+                    </div>
+                    <div id="crony-container">
+                        <h3>Your Cronies</h3>
+                        <div id="crony-cards">
+                            <!-- Crony cards will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How To Play Screen -->
+        <div id="how-to-play-screen" class="screen hidden">
+            <h2>How To Play</h2>
+            <div class="instructions">
+                <p>You're the President with a Twitter addiction and a love for tariffs!</p>
+                <p><strong>Goal:</strong> Survive 4 years without getting impeached while making yourself rich.</p>
+                <h3>Controls:</h3>
+                <ul>
+                    <li>Click the <strong>TWEET!</strong> button to issue random policy tweets</li>
+                    <li>Each tweet affects the market and may trigger scandals</li>
+                    <li>Use your <strong>Crony Cards</strong> strategically to maximize profits</li>
+                    <li>Keep an eye on the <strong>Scandal Meter</strong> - if it fills up, you're impeached!</li>
+                    <li>Watch the <strong>Market Health</strong> - if it crashes completely, you lose support</li>
+                </ul>
+                <p><strong>Win by:</strong> Reaching the end of your 4-year term with maximum wealth</p>
+                <p><strong>Lose by:</strong> Getting impeached or completely crashing the economy</p>
+            </div>
+            <button id="back-to-title" class="pixel-button">Back to Title</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen hidden">
+            <h2 id="game-over-title">Game Over</h2>
+            <p id="game-over-message">You've been impeached!</p>
+            <div id="final-stats">
+                <p>Years in Office: <span id="final-years">0</span></p>
+                <p>Final Wealth: $<span id="final-wealth">0</span>M</p>
+                <p>Scandals Survived: <span id="final-scandals">0</span></p>
+            </div>
+            <button id="play-again" class="pixel-button">Play Again</button>
+        </div>
+
+        <!-- Win Screen -->
+        <div id="win-screen" class="screen hidden">
+            <h2>Tremendous Victory!</h2>
+            <p id="win-message">You've completed your term and made a fortune!</p>
+            <div id="win-stats">
+                <p>Final Wealth: $<span id="win-wealth">0</span>M</p>
+                <p>Market Health: <span id="win-market">0</span>%</p>
+                <p>Scandals Survived: <span id="win-scandals">0</span></p>
+            </div>
+            <button id="play-again-win" class="pixel-button">Play Again</button>
+        </div>
+
+        <!-- Notifications -->
+        <div id="notification" class="hidden">
+            <p id="notification-text"></p>
+        </div>
+    </div>
+
+    <!-- Load JavaScript files -->
+    <script src="js/audio.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/tweets.js"></script>
+    <script src="js/market.js"></script>
+    <script src="js/cronies.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

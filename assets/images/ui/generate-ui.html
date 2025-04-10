@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tariff Tycoon - UI Element Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        
+        .ui-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .ui-element {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .ui-name {
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        canvas {
+            image-rendering: pixelated;
+            border: 2px solid #666;
+            background-color: transparent;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #1da1f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0d8ecf;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tariff Tycoon - UI Element Generator</h1>
+    
+    <div class="controls">
+        <button id="generateAll">Generate All UI Elements</button>
+        <button id="saveAll">Save All UI Elements</button>
+    </div>
+    
+    <div class="ui-container" id="uiContainer">
+        <!-- UI elements will be added here -->
+    </div>
+    
+    <script>
+        // UI element definitions
+        const uiElements = [
+            {
+                id: 'tweet-button',
+                name: 'Tweet Button',
+                width: 64,
+                height: 32
+            },
+            {
+                id: 'market-meter',
+                name: 'Market Meter',
+                width: 128,
+                height: 24
+            },
+            {
+                id: 'scandal-meter',
+                name: 'Scandal Meter',
+                width: 128,
+                height: 24
+            },
+            {
+                id: 'tweet-bubble',
+                name: 'Tweet Bubble',
+                width: 128,
+                height: 64
+            },
+            {
+                id: 'crony-card-bg',
+                name: 'Crony Card Background',
+                width: 64,
+                height: 96
+            },
+            {
+                id: 'notification-bg',
+                name: 'Notification Background',
+                width: 192,
+                height: 48
+            },
+            {
+                id: 'sound-button',
+                name: 'Sound Button',
+                width: 32,
+                height: 32
+            },
+            {
+                id: 'menu-button',
+                name: 'Menu Button',
+                width: 32,
+                height: 32
+            },
+            {
+                id: 'twitter-header',
+                name: 'Twitter Header',
+                width: 192,
+                height: 32
+            },
+            {
+                id: 'year-counter',
+                name: 'Year Counter',
+                width: 64,
+                height: 32
+            }
+        ];
+        
+        // Create UI element containers
+        const uiContainer = document.getElementById('uiContainer');
+        
+        uiElements.forEach(element => {
+            // Create element container
+            const container = document.createElement('div');
+            container.className = 'ui-element';
+            container.id = `container-${element.id}`;
+            
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = element.width;
+            canvas.height = element.height;
+            canvas.id = `canvas-${element.id}`;
+            
+            // Create name
+            const name = document.createElement('div');
+            name.className = 'ui-name';
+            name.textContent = element.name;
+            
+            // Add to container
+            container.appendChild(canvas);
+            container.appendChild(name);
+            
+            // Add to UI container
+            uiContainer.appendChild(container);
+        });
+        
+        // Generate all UI elements
+        function generateAllElements() {
+            uiElements.forEach(element => {
+                generateUIElement(element);
+            });
+        }
+        
+        // Generate a UI element
+        function generateUIElement(element) {
+            const canvas = document.getElementById(`canvas-${element.id}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw based on element type
+            switch (element.id) {
+                case 'tweet-button':
+                    drawTweetButton(ctx, canvas.width, canvas.height);
+                    break;
+                case 'market-meter':
+                    drawMarketMeter(ctx, canvas.width, canvas.height);
+                    break;
+                case 'scandal-meter':
+                    drawScandalMeter(ctx, canvas.width, canvas.height);
+                    break;
+                case 'tweet-bubble':
+                    drawTweetBubble(ctx, canvas.width, canvas.height);
+                    break;
+                case 'crony-card-bg':
+                    drawCronyCardBg(ctx, canvas.width, canvas.height);
+                    break;
+                case 'notification-bg':
+                    drawNotificationBg(ctx, canvas.width, canvas.height);
+                    break;
+                case 'sound-button':
+                    drawSoundButton(ctx, canvas.width, canvas.height);
+                    break;
+                case 'menu-button':
+                    drawMenuButton(ctx, canvas.width, canvas.height);
+                    break;
+                case 'twitter-header':
+                    drawTwitterHeader(ctx, canvas.width, canvas.height);
+                    break;
+                case 'year-counter':
+                    drawYearCounter(ctx, canvas.width, canvas.height);
+                    break;
+                default:
+                    drawGenericElement(ctx, canvas.width, canvas.height);
+            }
+        }
+        
+        // Draw Tweet Button
+        function drawTweetButton(ctx, width, height) {
+            // Button background
+            ctx.fillStyle = '#1da1f2'; // Twitter blue
+            drawRoundedRect(ctx, 0, 0, width, height, 4);
+            
+            // Button shadow
+            ctx.fillStyle = '#0d8ecf';
+            ctx.fillRect(0, height - 4, width, 4);
+            
+            // Button text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('TWEET!', width / 2, height / 2 - 2);
+        }
+        
+        // Draw Market Meter
+        function drawMarketMeter(ctx, width, height) {
+            // Meter background
+            ctx.fillStyle = '#38444d';
+            drawRoundedRect(ctx, 0, 0, width, height, 4);
+            
+            // Meter fill (70% full)
+            ctx.fillStyle = '#4caf50'; // Green
+            drawRoundedRect(ctx, 0, 0, width * 0.7, height, 4);
+            
+            // Meter border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(0, 0, width, height);
+        }
+        
+        // Draw Scandal Meter
+        function drawScandalMeter(ctx, width, height) {
+            // Meter background
+            ctx.fillStyle = '#38444d';
+            drawRoundedRect(ctx, 0, 0, width, height, 4);
+            
+            // Meter fill (30% full)
+            ctx.fillStyle = '#ff6b6b'; // Red
+            drawRoundedRect(ctx, 0, 0, width * 0.3, height, 4);
+            
+            // Meter border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(0, 0, width, height);
+        }
+        
+        // Draw Tweet Bubble
+        function drawTweetBubble(ctx, width, height) {
+            // Bubble background
+            ctx.fillStyle = '#192734';
+            drawRoundedRect(ctx, 0, 0, width, height, 8);
+            
+            // Bubble border
+            ctx.strokeStyle = '#38444d';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(2, 2, width - 4, height - 4);
+            
+            // Bubble tail
+            ctx.fillStyle = '#192734';
+            ctx.beginPath();
+            ctx.moveTo(10, height);
+            ctx.lineTo(20, height - 10);
+            ctx.lineTo(30, height);
+            ctx.fill();
+            
+            // Sample text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '8px Arial';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            ctx.fillText('China tariffs start NOW!', 10, 10);
+            ctx.fillText('#MAGA', 10, 25);
+            
+            // Effect text
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = '7px Arial';
+            ctx.fillText('Market panic! Stocks plummet.', 10, 40);
+        }
+        
+        // Draw Crony Card Background
+        function drawCronyCardBg(ctx, width, height) {
+            // Card background
+            ctx.fillStyle = '#38444d';
+            drawRoundedRect(ctx, 0, 0, width, height, 6);
+            
+            // Card border
+            ctx.strokeStyle = '#1da1f2';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(2, 2, width - 4, height - 4);
+            
+            // Portrait area
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(8, 8, width - 16, height / 2 - 8);
+            
+            // Name area
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '7px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('Crony Name', width / 2, height / 2 + 4);
+            
+            // Ability area
+            ctx.fillStyle = '#1da1f2';
+            ctx.font = '6px Arial';
+            ctx.fillText('Special Ability', width / 2, height / 2 + 16);
+        }
+        
+        // Draw Notification Background
+        function drawNotificationBg(ctx, width, height) {
+            // Background with transparency
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            drawRoundedRect(ctx, 0, 0, width, height, 8);
+            
+            // Border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(2, 2, width - 4, height - 4);
+            
+            // Sample text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Market crash! You lost $150M!', width / 2, height / 2);
+        }
+        
+        // Draw Sound Button
+        function drawSoundButton(ctx, width, height) {
+            // Button background
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, width / 2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Button border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, width / 2 - 2, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Sound icon
+            ctx.fillStyle = '#ffffff';
+            // Speaker
+            ctx.fillRect(10, 12, 4, 8);
+            // Sound waves
+            ctx.beginPath();
+            ctx.moveTo(14, 16);
+            ctx.lineTo(18, 10);
+            ctx.lineTo(18, 22);
+            ctx.lineTo(14, 16);
+            ctx.fill();
+            // Sound waves
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(18, 16, 4, -Math.PI / 3, Math.PI / 3);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(18, 16, 7, -Math.PI / 3, Math.PI / 3);
+            ctx.stroke();
+        }
+        
+        // Draw Menu Button
+        function drawMenuButton(ctx, width, height) {
+            // Button background
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, width / 2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Button border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(width / 2, height / 2, width / 2 - 2, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Menu icon (hamburger)
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(8, 10, 16, 2);
+            ctx.fillRect(8, 15, 16, 2);
+            ctx.fillRect(8, 20, 16, 2);
+        }
+        
+        // Draw Twitter Header
+        function drawTwitterHeader(ctx, width, height) {
+            // Header background
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Header border
+            ctx.fillStyle = '#38444d';
+            ctx.fillRect(0, height - 2, width, 2);
+            
+            // Header text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Presidential Tweets', width / 2, height / 2);
+        }
+        
+        // Draw Year Counter
+        function drawYearCounter(ctx, width, height) {
+            // Counter background
+            ctx.fillStyle = '#192734';
+            drawRoundedRect(ctx, 0, 0, width, height, 4);
+            
+            // Counter border
+            ctx.strokeStyle = '#38444d';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(2, 2, width - 4, height - 4);
+            
+            // Counter text
+            ctx.fillStyle = '#8899a6';
+            ctx.font = '8px Arial';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Year:', 8, height / 2);
+            
+            // Counter value
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'right';
+            ctx.fillText('2/4', width - 8, height / 2);
+        }
+        
+        // Draw generic element
+        function drawGenericElement(ctx, width, height) {
+            // Background
+            ctx.fillStyle = '#38444d';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(0, 0, width, height);
+            
+            // Cross pattern
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(width, height);
+            ctx.moveTo(width, 0);
+            ctx.lineTo(0, height);
+            ctx.stroke();
+        }
+        
+        // Helper function to draw rounded rectangles
+        function drawRoundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Save all UI elements
+        function saveAllElements() {
+            uiElements.forEach(element => {
+                const canvas = document.getElementById(`canvas-${element.id}`);
+                const link = document.createElement('a');
+                link.download = `${element.id}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+        
+        // Set up event listeners
+        document.getElementById('generateAll').addEventListener('click', generateAllElements);
+        document.getElementById('saveAll').addEventListener('click', saveAllElements);
+        
+        // Initialize
+        generateAllElements();
+    </script>
+</body>
+</html>

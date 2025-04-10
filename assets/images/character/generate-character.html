@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tariff Tycoon - Character Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        .canvas-container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            image-rendering: pixelated;
+            border: 2px solid #666;
+            background-color: transparent;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #1da1f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0d8ecf;
+        }
+        
+        .preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .preview canvas {
+            margin: 10px;
+        }
+        
+        .color-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #666;
+            cursor: pointer;
+        }
+        
+        .color-swatch.selected {
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tariff Tycoon - Pixel Art Character Generator</h1>
+    
+    <div class="canvas-container">
+        <canvas id="pixelCanvas" width="32" height="48"></canvas>
+    </div>
+    
+    <div class="color-picker" id="colorPicker">
+        <!-- Colors will be added by JavaScript -->
+    </div>
+    
+    <div class="controls">
+        <button id="drawCharacter">Generate Trump-like Character</button>
+        <button id="clearCanvas">Clear Canvas</button>
+        <button id="saveImage">Save Image</button>
+    </div>
+    
+    <div class="preview">
+        <h2>Preview (4x)</h2>
+        <canvas id="previewCanvas" width="128" height="192"></canvas>
+    </div>
+    
+    <script>
+        // Get canvas and context
+        const canvas = document.getElementById('pixelCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        const previewCanvas = document.getElementById('previewCanvas');
+        const previewCtx = previewCanvas.getContext('2d');
+        
+        // Define colors
+        const colors = [
+            { name: 'Transparent', hex: 'transparent' },
+            { name: 'Hair Yellow', hex: '#FFD700' },
+            { name: 'Skin Peach', hex: '#FFDAB9' },
+            { name: 'Eye Blue', hex: '#1E90FF' },
+            { name: 'Mouth Red', hex: '#FF6347' },
+            { name: 'Suit Blue', hex: '#00008B' },
+            { name: 'Tie Red', hex: '#FF0000' },
+            { name: 'Dark Gray', hex: '#2F4F4F' },
+            { name: 'Black', hex: '#000000' },
+            { name: 'White', hex: '#FFFFFF' }
+        ];
+        
+        // Current selected color
+        let currentColor = colors[0].hex;
+        
+        // Create color swatches
+        const colorPicker = document.getElementById('colorPicker');
+        colors.forEach(color => {
+            const swatch = document.createElement('div');
+            swatch.className = 'color-swatch';
+            swatch.style.backgroundColor = color.hex;
+            swatch.title = color.name;
+            swatch.addEventListener('click', () => {
+                // Remove selected class from all swatches
+                document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+                // Add selected class to clicked swatch
+                swatch.classList.add('selected');
+                // Set current color
+                currentColor = color.hex;
+            });
+            colorPicker.appendChild(swatch);
+        });
+        
+        // Select first color by default
+        document.querySelector('.color-swatch').classList.add('selected');
+        
+        // Clear canvas
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updatePreview();
+        }
+        
+        // Update preview canvas
+        function updatePreview() {
+            // Clear preview canvas
+            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+            
+            // Draw scaled up version
+            previewCtx.imageSmoothingEnabled = false;
+            previewCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, previewCanvas.width, previewCanvas.height);
+        }
+        
+        // Draw pixel at position
+        function drawPixel(x, y) {
+            if (currentColor === 'transparent') {
+                ctx.clearRect(x, y, 1, 1);
+            } else {
+                ctx.fillStyle = currentColor;
+                ctx.fillRect(x, y, 1, 1);
+            }
+            updatePreview();
+        }
+        
+        // Draw Trump-like character
+        function drawCharacter() {
+            // Clear canvas
+            clearCanvas();
+            
+            // Hair (yellow)
+            ctx.fillStyle = '#FFD700';
+            ctx.fillRect(8, 0, 16, 8);
+            ctx.fillRect(6, 4, 20, 6);
+            
+            // Face (peach)
+            ctx.fillStyle = '#FFDAB9';
+            ctx.fillRect(10, 8, 12, 12);
+            
+            // Eyes (blue)
+            ctx.fillStyle = '#1E90FF';
+            ctx.fillRect(12, 12, 2, 2);
+            ctx.fillRect(18, 12, 2, 2);
+            
+            // Mouth (red)
+            ctx.fillStyle = '#FF6347';
+            ctx.fillRect(14, 16, 4, 1);
+            
+            // Suit (dark blue)
+            ctx.fillStyle = '#00008B';
+            ctx.fillRect(8, 20, 16, 20);
+            
+            // Tie (red)
+            ctx.fillStyle = '#FF0000';
+            ctx.fillRect(14, 20, 4, 12);
+            
+            // Arms (suit color)
+            ctx.fillStyle = '#00008B';
+            ctx.fillRect(4, 22, 4, 12);
+            ctx.fillRect(24, 22, 4, 12);
+            
+            // Hands (peach)
+            ctx.fillStyle = '#FFDAB9';
+            ctx.fillRect(2, 34, 6, 4);
+            ctx.fillRect(24, 34, 6, 4);
+            
+            // Legs (dark gray)
+            ctx.fillStyle = '#2F4F4F';
+            ctx.fillRect(10, 40, 5, 8);
+            ctx.fillRect(17, 40, 5, 8);
+            
+            // Phone in hand (black)
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(24, 32, 4, 6);
+            
+            updatePreview();
+        }
+        
+        // Save image
+        function saveImage() {
+            const link = document.createElement('a');
+            link.download = 'trump-character.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Set up event listeners
+        document.getElementById('drawCharacter').addEventListener('click', drawCharacter);
+        document.getElementById('clearCanvas').addEventListener('click', clearCanvas);
+        document.getElementById('saveImage').addEventListener('click', saveImage);
+        
+        // Canvas click handler
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) / (rect.width / canvas.width));
+            const y = Math.floor((e.clientY - rect.top) / (rect.height / canvas.height));
+            drawPixel(x, y);
+        });
+        
+        // Canvas mouse move handler (for drawing)
+        let isDrawing = false;
+        canvas.addEventListener('mousedown', () => {
+            isDrawing = true;
+        });
+        
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+        
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) / (rect.width / canvas.width));
+            const y = Math.floor((e.clientY - rect.top) / (rect.height / canvas.height));
+            drawPixel(x, y);
+        });
+        
+        // Initialize
+        clearCanvas();
+        drawCharacter();
+    </script>
+</body>
+</html>

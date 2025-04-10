@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tariff Tycoon - Game Preview Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        .canvas-container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            border: 2px solid #666;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #1da1f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0d8ecf;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tariff Tycoon - Game Preview Generator</h1>
+    
+    <div class="canvas-container">
+        <canvas id="previewCanvas" width="900" height="600"></canvas>
+    </div>
+    
+    <div class="controls">
+        <button id="generatePreview">Generate Preview</button>
+        <button id="saveImage">Save Image</button>
+    </div>
+    
+    <script>
+        // Get canvas and context
+        const canvas = document.getElementById('previewCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Generate game preview
+        function generatePreview() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Background (Twitter dark theme)
+            ctx.fillStyle = '#15202b';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw game layout
+            drawGameLayout();
+            
+            // Draw game elements
+            drawCharacter();
+            drawTweetButton();
+            drawTweetFeed();
+            drawMeters();
+            drawCronies();
+            drawStatsBar();
+        }
+        
+        // Draw game layout
+        function drawGameLayout() {
+            // Left column (character)
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(0, 60, 225, canvas.height - 60);
+            
+            // Middle column (tweets)
+            ctx.fillStyle = '#15202b';
+            ctx.fillRect(225, 60, 450, canvas.height - 60);
+            
+            // Right column (meters)
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(675, 60, 225, canvas.height - 60);
+            
+            // Top bar
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(0, 0, canvas.width, 60);
+            
+            // Borders
+            ctx.fillStyle = '#38444d';
+            ctx.fillRect(225, 60, 4, canvas.height - 60); // Left border
+            ctx.fillRect(671, 60, 4, canvas.height - 60); // Right border
+            ctx.fillRect(0, 60, canvas.width, 4); // Top border
+        }
+        
+        // Draw character
+        function drawCharacter() {
+            // Character container
+            ctx.fillStyle = '#38444d';
+            ctx.fillRect(37, 100, 150, 200);
+            
+            // Character (simplified Trump-like figure)
+            
+            // Hair (yellow)
+            ctx.fillStyle = '#FFD700';
+            ctx.fillRect(62, 120, 100, 40);
+            
+            // Face (peach)
+            ctx.fillStyle = '#FFDAB9';
+            ctx.fillRect(72, 160, 80, 80);
+            
+            // Eyes (blue)
+            ctx.fillStyle = '#1E90FF';
+            ctx.fillRect(92, 180, 10, 10);
+            ctx.fillRect(122, 180, 10, 10);
+            
+            // Mouth (red)
+            ctx.fillStyle = '#FF6347';
+            ctx.fillRect(97, 210, 30, 5);
+            
+            // Suit (dark blue)
+            ctx.fillStyle = '#00008B';
+            ctx.fillRect(72, 240, 80, 100);
+            
+            // Tie (red)
+            ctx.fillStyle = '#FF0000';
+            ctx.fillRect(102, 240, 20, 60);
+            
+            // Phone in hand
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(142, 260, 20, 40);
+        }
+        
+        // Draw tweet button
+        function drawTweetButton() {
+            // Button background
+            ctx.fillStyle = '#1da1f2';
+            roundedRect(ctx, 37, 350, 150, 60, 8);
+            
+            // Button shadow
+            ctx.fillStyle = '#0d8ecf';
+            ctx.fillRect(37, 390, 150, 20);
+            
+            // Button text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('TWEET!', 112, 380);
+        }
+        
+        // Draw tweet feed
+        function drawTweetFeed() {
+            // Twitter header
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(225, 60, 450, 50);
+            
+            // Header text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Presidential Tweets', 450, 85);
+            
+            // Tweets
+            drawTweet(250, 130, 400, 100, 'China has taken advantage of us long enough. $500B in tariffs starts NOW!', 'Market panic, soy and tech stocks plummet.');
+            drawTweet(250, 250, 400, 100, 'Tim Cook is a great guy. iPhones will be EXEMPT from tariffs!', 'Apple stock surges, rivals tank.');
+            drawTweet(250, 370, 400, 100, 'Great farmers are TRUE patriots. $28 billion bailout. Keep farming!', 'Farm stocks up, budget deficit increases.');
+        }
+        
+        // Draw a single tweet
+        function drawTweet(x, y, width, height, content, effect) {
+            // Tweet background
+            ctx.fillStyle = '#192734';
+            roundedRect(ctx, x, y, width, height, 8);
+            
+            // Tweet border
+            ctx.strokeStyle = '#38444d';
+            ctx.lineWidth = 2;
+            roundedRectStroke(ctx, x, y, width, height, 8);
+            
+            // Tweet avatar
+            ctx.fillStyle = '#38444d';
+            ctx.beginPath();
+            ctx.arc(x + 25, y + 25, 20, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Tweet name
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('President', x + 55, y + 25);
+            
+            // Tweet content
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Arial';
+            wrapText(ctx, content, x + 25, y + 50, width - 50, 20);
+            
+            // Tweet effect
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = 'italic 12px Arial';
+            ctx.fillText(effect, x + 25, y + height - 15);
+        }
+        
+        // Draw meters
+        function drawMeters() {
+            // Market meter container
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Market Health', 787, 100);
+            
+            // Market meter background
+            ctx.fillStyle = '#38444d';
+            roundedRect(ctx, 700, 120, 175, 30, 4);
+            
+            // Market meter fill (70%)
+            ctx.fillStyle = '#4caf50';
+            roundedRect(ctx, 700, 120, 175 * 0.7, 30, 4);
+            
+            // Scandal meter container
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('Scandal Level', 787, 180);
+            
+            // Scandal meter background
+            ctx.fillStyle = '#38444d';
+            roundedRect(ctx, 700, 200, 175, 30, 4);
+            
+            // Scandal meter fill (30%)
+            ctx.fillStyle = '#ff6b6b';
+            roundedRect(ctx, 700, 200, 175 * 0.3, 30, 4);
+            
+            // Cronies section
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('Your Cronies', 787, 260);
+            
+            // Crony cards
+            drawCronyCard(700, 290, 80, 120, 'Jared Kushcoin', 'Trades crypto on inside info');
+            drawCronyCard(790, 290, 80, 120, 'Ivankapital', 'Bails out fashion stocks');
+            drawCronyCard(745, 420, 80, 120, 'Mnuchman', 'Buys treasury bonds before panic');
+        }
+        
+        // Draw a crony card
+        function drawCronyCard(x, y, width, height, name, ability) {
+            // Card background
+            ctx.fillStyle = '#38444d';
+            roundedRect(ctx, x, y, width, height, 6);
+            
+            // Card border
+            ctx.strokeStyle = '#1da1f2';
+            ctx.lineWidth = 2;
+            roundedRectStroke(ctx, x, y, width, height, 6);
+            
+            // Portrait area
+            ctx.fillStyle = '#192734';
+            ctx.fillRect(x + 10, y + 10, width - 20, height / 2 - 10);
+            
+            // Name
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 10px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(name, x + width / 2, y + height / 2 + 15);
+            
+            // Ability
+            ctx.fillStyle = '#1da1f2';
+            ctx.font = '9px Arial';
+            wrapText(ctx, ability, x + width / 2, y + height / 2 + 30, width - 20, 12);
+        }
+        
+        // Draw stats bar
+        function drawStatsBar() {
+            // Year
+            ctx.fillStyle = '#8899a6';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Year:', 100, 30);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('2/4', 150, 30);
+            
+            // Wealth
+            ctx.fillStyle = '#8899a6';
+            ctx.font = '14px Arial';
+            ctx.fillText('Wealth:', 450, 30);
+            
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('$2500M', 520, 30);
+            
+            // Day
+            ctx.fillStyle = '#8899a6';
+            ctx.font = '14px Arial';
+            ctx.fillText('Day:', 750, 30);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('25', 800, 30);
+        }
+        
+        // Helper function to draw rounded rectangles
+        function roundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Helper function to stroke rounded rectangles
+        function roundedRectStroke(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        
+        // Helper function to wrap text
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let testLine = '';
+            let lineCount = 0;
+            
+            ctx.textAlign = 'left';
+            
+            for (let n = 0; n < words.length; n++) {
+                testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, x, y + (lineCount * lineHeight));
+                    line = words[n] + ' ';
+                    lineCount++;
+                } else {
+                    line = testLine;
+                }
+            }
+            
+            ctx.fillText(line, x, y + (lineCount * lineHeight));
+        }
+        
+        // Save image
+        function saveImage() {
+            const link = document.createElement('a');
+            link.download = 'game-preview.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Set up event listeners
+        document.getElementById('generatePreview').addEventListener('click', generatePreview);
+        document.getElementById('saveImage').addEventListener('click', saveImage);
+        
+        // Initialize
+        generatePreview();
+    </script>
+</body>
+</html>

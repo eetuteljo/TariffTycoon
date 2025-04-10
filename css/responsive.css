@@ -1,0 +1,313 @@
+/* Tariff Tycoon: The Art of the Panic - Responsive Styles */
+
+/* Medium Screens (Tablets) */
+@media screen and (max-width: 1024px) {
+    .game-title {
+        font-size: 3rem;
+    }
+    
+    .game-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .tagline {
+        font-size: 0.9rem;
+    }
+    
+    /* Adjust game area layout */
+    #game-area {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    #character-column, #twitter-column, #meters-column {
+        width: 100%;
+        height: auto;
+    }
+    
+    #character-column {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    
+    #character-container {
+        width: 40%;
+        height: 150px;
+    }
+    
+    #tweet-button {
+        width: 50%;
+    }
+    
+    #twitter-column {
+        border-left: none;
+        border-right: none;
+        border-top: 4px solid #38444d;
+        border-bottom: 4px solid #38444d;
+        height: 300px;
+    }
+    
+    #meters-column {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    
+    .meter-container {
+        width: 45%;
+    }
+    
+    #crony-container {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+/* Small Screens (Mobile) */
+@media screen and (max-width: 768px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .game-subtitle {
+        font-size: 1rem;
+    }
+    
+    .tagline {
+        font-size: 0.8rem;
+        margin-bottom: 30px;
+    }
+    
+    .pixel-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    /* Stats bar */
+    #stats-bar {
+        height: auto;
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .stat {
+        margin: 5px 0;
+    }
+    
+    /* Character column */
+    #character-column {
+        flex-direction: column;
+    }
+    
+    #character-container {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+    
+    #character-sprite {
+        width: 100px;
+        height: 150px;
+    }
+    
+    #tweet-button {
+        width: 80%;
+    }
+    
+    /* Twitter column */
+    #twitter-column {
+        height: 250px;
+    }
+    
+    /* Meters column */
+    #meters-column {
+        flex-direction: column;
+    }
+    
+    .meter-container {
+        width: 100%;
+    }
+    
+    /* How to play screen */
+    .instructions {
+        font-size: 0.7rem;
+    }
+    
+    /* Game over and win screens */
+    #game-over-title, #win-screen h2 {
+        font-size: 2rem;
+    }
+    
+    #game-over-message, #win-message {
+        font-size: 1rem;
+    }
+    
+    #final-stats, #win-stats {
+        font-size: 0.8rem;
+    }
+}
+
+/* Landscape Mode for Mobile */
+@media screen and (max-width: 812px) and (orientation: landscape) {
+    .screen {
+        padding: 10px;
+    }
+    
+    .game-title {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+    
+    .game-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+    
+    .tagline {
+        margin-bottom: 20px;
+    }
+    
+    .pixel-button {
+        margin: 5px;
+    }
+    
+    /* Game area */
+    #game-area {
+        flex-direction: row;
+    }
+    
+    #character-column {
+        width: 25%;
+        height: 100%;
+    }
+    
+    #twitter-column {
+        width: 50%;
+        height: 100%;
+        border-left: 4px solid #38444d;
+        border-right: 4px solid #38444d;
+        border-top: none;
+        border-bottom: none;
+    }
+    
+    #meters-column {
+        width: 25%;
+        height: 100%;
+        flex-direction: column;
+    }
+    
+    .meter-container {
+        width: 100%;
+    }
+    
+    /* Character */
+    #character-container {
+        width: 100%;
+        height: 60%;
+    }
+    
+    #character-sprite {
+        width: 80px;
+        height: 120px;
+    }
+    
+    /* How to play screen */
+    #how-to-play-screen {
+        padding: 20px;
+        overflow-y: auto;
+    }
+    
+    #how-to-play-screen h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .instructions {
+        margin-bottom: 15px;
+    }
+    
+    .instructions p, .instructions ul {
+        margin-bottom: 10px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Extra Small Screens */
+@media screen and (max-width: 480px) {
+    .game-title {
+        font-size: 1.5rem;
+    }
+    
+    .game-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .tagline {
+        font-size: 0.7rem;
+    }
+    
+    /* Adjust tweet feed */
+    .tweet {
+        padding: 10px;
+    }
+    
+    .tweet-avatar {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .tweet-name {
+        font-size: 0.7rem;
+    }
+    
+    .tweet-content {
+        font-size: 0.8rem;
+    }
+    
+    .tweet-effect {
+        font-size: 0.7rem;
+    }
+    
+    /* Adjust crony cards */
+    .crony-card {
+        width: 80px;
+        height: 120px;
+    }
+    
+    .crony-portrait {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .crony-name {
+        font-size: 0.5rem;
+    }
+    
+    .crony-ability {
+        font-size: 0.4rem;
+    }
+}
+
+/* High DPI Screens */
+@media screen and (min-resolution: 192dpi) {
+    /* Ensure pixel art rendering is crisp on high DPI screens */
+    body {
+        image-rendering: pixelated;
+    }
+    
+    .pixel-border, #character-sprite, .crony-portrait {
+        image-rendering: pixelated;
+    }
+}
+
+/* Ensure minimum height */
+@media screen and (max-height: 600px) {
+    body {
+        min-height: 600px;
+        overflow-y: auto;
+    }
+    
+    #game-container {
+        min-height: 600px;
+    }
+}
